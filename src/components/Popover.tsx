@@ -46,10 +46,7 @@ export const Popover = ({children}: PopoverProps) => {
 
     return (
         <div style={{position: "relative"}}>
-            <div >{ target && 
-                cloneElement(target[0].props.children, {onClick: onToggle,ref: reference })
-                    }
-            </div>
+            <div >{cloneElement(target[0].props.children, {onClick: onToggle,ref: reference })}</div>
             { opened && (
                 <div 
                     ref={floating} 
