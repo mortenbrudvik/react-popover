@@ -1,12 +1,26 @@
 import React from 'react';
-import './App.css';
+import {Content, Popover, Target} from "./components";
 
-function App() {
-  return (
-    <div className="App">
+const App = () => {
+    return (
+        <div 
+            className="App" 
+            style={{
+                margin: 30,
+                backgroundColor: 'whitesmoke'
+        }}>
+            <Popover>
+                <Target>
+                    <button>Click me!</button>
+                </Target>
+                <Content>
+                    <div>Hello, how you doing?</div>
+                </Content>
 
-    </div>
-  );
+            </Popover>
+
+        </div>
+    );
 }
 
 export default App;
