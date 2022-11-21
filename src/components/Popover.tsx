@@ -1,15 +1,16 @@
-import {Children, cloneElement, ReactNode, useRef, useState} from "react";
+import {Children, cloneElement, ReactNode, useCallback, useRef, useState} from "react";
 import {arrow, offset, useFloating} from "@floating-ui/react-dom";
 import {Target} from "./Target";
 import {Content} from "./Content";
 import './Popover.css';
-import {useClickOutside} from "../hooks";
+import {useClickOutside, useRerender} from "../hooks";
 
 export interface PopoverProps {
     children: ReactNode;
 } 
 
 export const Popover = ({children}: PopoverProps) => {
+    const rerender = useRerender();
     const [opened, setOpened] = useState(false);
     const onToggle = () => setOpened(o => !o);
     const arrowRef = useRef(null);
@@ -23,6 +24,7 @@ export const Popover = ({children}: PopoverProps) => {
         strategy,
         placement: finalPlacement,
         middlewareData: {arrow: {x: arrowX, y: arrowY} = {}},
+        refs,
     } = useFloating({
         placement: 'right',
         strategy: 'absolute',
@@ -45,14 +47,24 @@ export const Popover = ({children}: PopoverProps) => {
         [arrowPlacement]: '-5px'
     };
 
-    const testRef = useClickOutside(() => setOpened(false));
-    
+    const onFloatingRefChange = useCallback((node: HTMLElement|null) => {
+        floating(node);
+        rerender();
+    }, []);
+
+    useClickOutside(() => {
+        setOpened(false);
+    }, [refs.floating.current, refs.reference.current as any]);
+
     return (
-        <div style={{position: "relative"}} ref={testRef} onKeyDownCapture={() => setOpened(false)}>
-            <div >{cloneElement(target[0].props.children, {onClick: onToggle,ref: reference })}</div>
-            { opened && (
+        <div style={{position: "relative"}} onKeyDownCapture={() => setOpened(false)}>
+            <div style={{width: 'fit-content', height: 'fit-content'}}>{cloneElement(target[0].props.children, {
+                onClick: onToggle, 
+                ref: reference,
+                })}</div>
+            {opened && (
                 <div 
-                    ref={floating} 
+                    ref={onFloatingRefChange}
                     className="floating"
                     style={{
                         position: strategy,

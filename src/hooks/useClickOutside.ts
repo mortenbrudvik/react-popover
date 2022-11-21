@@ -1,22 +1,21 @@
-﻿import {useEffect, useRef} from "react";
+﻿import {useEffect} from "react";
 
 const events = ['mousedown', 'touchstart'];
 
-export const useClickOutside = <T extends HTMLElement = any>(handler: () => void) => {
-    const ref = useRef<T>();
+export const useClickOutside = <T extends HTMLElement = any>(handler: () => void, nodes: HTMLElement[]) => {
 
     useEffect(() => {
         const listener = (event: any) => {
-            const {target} = event ?? {};
-            if (ref.current && !ref.current.contains(target)) {
-                handler();
+            if (Array.isArray(nodes)) {
+                const shouldTrigger = nodes.every((node) => !!node && !event.composedPath().includes(node));
+                if (shouldTrigger) {
+                    handler();
+                }
             }
         };
 
         events.forEach((fn) => document.addEventListener(fn, listener));
 
         return () => events.forEach((fn) => document.removeEventListener(fn, listener));
-    }, [ref, handler]);
-
-    return ref;
+    }, [handler, nodes]);
 };
