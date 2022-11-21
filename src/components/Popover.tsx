@@ -32,7 +32,7 @@ export const Popover = ({children}: PopoverProps) => {
         ],
     });
 
-    const currentSide = {
+    const arrowPlacement = {
         top: 'bottom',
         right: 'left',
         bottom: 'top',
@@ -42,7 +42,7 @@ export const Popover = ({children}: PopoverProps) => {
     const arrowStyle = {
         left: arrowX != null ? `${arrowX}px` : '',
         top: arrowY != null ? `${arrowY}px` : '',
-        [currentSide]: '-5px'
+        [arrowPlacement]: '-5px'
     };
 
     const testRef = useClickOutside(() => setOpened(false));
