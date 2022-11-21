@@ -3,6 +3,7 @@ import {arrow, offset, useFloating} from "@floating-ui/react-dom";
 import {Target} from "./Target";
 import {Content} from "./Content";
 import './Popover.css';
+import {useClickOutside} from "../hooks";
 
 export interface PopoverProps {
     children: ReactNode;
@@ -44,8 +45,10 @@ export const Popover = ({children}: PopoverProps) => {
         [currentSide]: '-5px'
     };
 
+    const testRef = useClickOutside(() => setOpened(false));
+    
     return (
-        <div style={{position: "relative"}}>
+        <div style={{position: "relative"}} ref={testRef}>
             <div >{cloneElement(target[0].props.children, {onClick: onToggle,ref: reference })}</div>
             { opened && (
                 <div 
