@@ -48,7 +48,7 @@ export const Popover = ({children}: PopoverProps) => {
     const testRef = useClickOutside(() => setOpened(false));
     
     return (
-        <div style={{position: "relative"}} ref={testRef}>
+        <div style={{position: "relative"}} ref={testRef} onKeyDownCapture={() => setOpened(false)}>
             <div >{cloneElement(target[0].props.children, {onClick: onToggle,ref: reference })}</div>
             { opened && (
                 <div 
