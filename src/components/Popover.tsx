@@ -58,12 +58,12 @@ export const Popover = ({children}: PopoverProps) => {
 
     return (
         <div style={{position: "relative"}} onKeyDownCapture={() => setOpened(false)}>
-            <div style={{width: 'fit-content', height: 'fit-content'}}>{cloneElement(target[0].props.children, {
-                onClick: onToggle, 
+            <div>{cloneElement(target[0].props.children, {
+                onClick: onToggle,
                 ref: reference,
-                })}</div>
+            })}</div>
             {opened && (
-                <div 
+                <div
                     ref={onFloatingRefChange}
                     className="floating"
                     style={{
