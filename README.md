@@ -24,9 +24,9 @@ Click on button to display popover section relative to button.
 Controlled from outside the component
 ```tsx
 
-const [opened, setOpened] = useState(false);
+const [open, setOpen] = useState(false);
 
-<Popover opened={opened} onChange={setOpened}>
+<Popover opened={open} onChange={setOpen}>
     <Target>
         <button>Click on me</button>
     </Target>
