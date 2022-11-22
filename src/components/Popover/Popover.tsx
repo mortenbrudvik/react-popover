@@ -7,16 +7,23 @@ import {useClickOutside, useRerender} from "hooks";
 
 export interface PopoverProps {
     children: ReactNode;
+    opened?: boolean;
+    onChange?: (val: boolean) => void;
 } 
 
-export const Popover = ({children}: PopoverProps) => {
+export const Popover = (props: PopoverProps) => {
     const rerender = useRerender();
-    const [opened, setOpened] = useState(false);
-    const onToggle = () => setOpened(o => !o);
+    const [opened, setOpened] = useOpenedState({
+        openedValue: props.opened,
+        onChange: props.onChange
+    });
+
+    const onToggle = () => setOpened(!opened);
+    
     const arrowRef = useRef(null);
 
-    const target = getChildrenFromDisplayName(children, 'Target');
-    const content = getChildrenFromDisplayName(children, 'Content');
+    const target = getChildrenFromDisplayName(props.children, 'Target');
+    const content = getChildrenFromDisplayName(props.children, 'Content');
 
     const {
         x, y,
@@ -81,6 +88,24 @@ export const Popover = ({children}: PopoverProps) => {
             )}
         </div>
     );
+};
+
+type useOpenedStateProps = {
+    openedValue?: boolean,
+    onChange?: (opened: boolean) => void,
+};
+
+const useOpenedState = ({openedValue, onChange}: useOpenedStateProps): [boolean, (opened: boolean) => void] => {
+    const [opened, setOpened] = useState(false);
+
+    const handleOpenedChange = (open: boolean) => {
+        setOpened(open);
+        onChange?.(open);
+    }
+
+    return (openedValue !== undefined)
+        ? [openedValue, onChange ?? (() => {})]
+        : [opened, handleOpenedChange]
 };
 
 export const getChildrenFromDisplayName = (children: any, displayName: string) =>

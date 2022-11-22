@@ -1,5 +1,5 @@
 body {
-  margin: 0;
+  margin: 100px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -11,6 +11,34 @@ body {
 button {
   background: aliceblue;
 }
+
+.question-heading {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+ul {
+  list-style: outside none none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+    padding: 3px;
+}
+
+.question {
+  padding: 4px;
+  font-weight: 500;
+  display: inline;
+  border-radius: 2px;
+}
+
+.question:hover {
+  background: aliceblue;
+  cursor: default;
+}
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
