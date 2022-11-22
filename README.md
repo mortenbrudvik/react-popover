@@ -1,12 +1,12 @@
-### React Popover
+## React Popover
 
 A React popover component built using [Floating UI](https://floating-ui.com/) framework.
 
-<img src="screenshot.png"  width="40%"/>
+<img src="screenshot.jpg"  width="40%"/>
 
 ---
 
-#### Usage
+### Usage
 
 Click on button to display popover section relative to button.
 
@@ -17,6 +17,30 @@ Click on button to display popover section relative to button.
     </Target>
     <Content>
         <div>Floating content</div>
+    </Content>
+</Popover>
+```
+
+Controlled from outside the component
+```tsx
+
+const [opened, setOpened] = useState(false);
+
+<Popover opened={opened} onChange={setOpened}>
+    <Target>
+        <button>Click on me</button>
+    </Target>
+    <Content>
+        <ul>
+            <div className="question-heading">Pick a question</div>
+            {questions.map(question =>
+                <li key={question}>
+                    <div className="question" onClick={() => setOpen(false)}>
+                        {question}
+                    </div>
+                </li>
+            )}
+        </ul>
     </Content>
 </Popover>
 ```

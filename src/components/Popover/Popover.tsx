@@ -64,7 +64,11 @@ export const Popover = (props: PopoverProps) => {
     }, [refs.floating.current, refs.reference.current as any]);
 
     return (
-        <div style={{position: "relative"}} onKeyDownCapture={() => setOpened(false)}>
+        <div style={{position: "relative"}} onKeyDownCapture={(e) => {
+            if (e.key === 'Escape') {
+                setOpened(false);
+            }
+        }}>
             <div>{cloneElement(target[0].props.children, {
                 onClick: onToggle,
                 ref: reference,
