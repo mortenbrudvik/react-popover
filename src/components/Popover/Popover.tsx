@@ -3,7 +3,7 @@ import {arrow, offset, useFloating} from "@floating-ui/react-dom";
 import {Target} from "./Target";
 import {Content} from "./Content";
 import './Popover.css';
-import {useClickOutside, useRerender} from "../hooks";
+import {useClickOutside, useRerender} from "hooks";
 
 export interface PopoverProps {
     children: ReactNode;

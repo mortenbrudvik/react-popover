@@ -1,5 +1,5 @@
+import {Content, Popover, Target } from 'components';
 import React from 'react';
-import {Content, Popover, Target} from "./components";
 
 const App = () => {
     return (
