@@ -1,5 +1,5 @@
 import {Children, cloneElement, ReactNode, useCallback, useRef, useState} from "react";
-import {arrow, offset, useFloating} from "@floating-ui/react-dom";
+import {arrow, offset, Placement, useFloating} from "@floating-ui/react-dom";
 import {Target} from "./Target";
 import {Content} from "./Content";
 import './Popover.css';
@@ -9,9 +9,10 @@ export interface PopoverProps {
     children: ReactNode;
     opened?: boolean;
     onChange?: (val: boolean) => void;
+    placement?: Placement; 
 } 
 
-export const Popover = (props: PopoverProps) => {
+export const Popover = ({children, placement = 'right', ...props}: PopoverProps) => {
     const rerender = useRerender();
     const [opened, setOpened] = useOpenedState({
         openedValue: props.opened,
@@ -22,8 +23,8 @@ export const Popover = (props: PopoverProps) => {
     
     const arrowRef = useRef(null);
 
-    const target = getChildrenFromDisplayName(props.children, 'Target');
-    const content = getChildrenFromDisplayName(props.children, 'Content');
+    const target = getChildrenFromDisplayName(children, 'Target');
+    const content = getChildrenFromDisplayName(children, 'Content');
 
     const {
         x, y,
@@ -33,7 +34,7 @@ export const Popover = (props: PopoverProps) => {
         middlewareData: {arrow: {x: arrowX, y: arrowY} = {}},
         refs,
     } = useFloating({
-        placement: 'right',
+        placement,
         strategy: 'absolute',
         middleware: [
             offset(10),
@@ -42,16 +43,17 @@ export const Popover = (props: PopoverProps) => {
     });
 
     const arrowPlacement = {
-        top: 'bottom',
-        right: 'left',
-        bottom: 'top',
-        left: 'right',
-    }[finalPlacement.split('-')[0]] ?? '';
-
+        right: {position: 'left', rotate: 45},
+        bottom: {position: 'top', rotate: 135},
+        left: {position: 'right', rotate: 225},
+        top: {position: 'bottom', rotate: 315},
+    }[finalPlacement.split('-')[0]] ?? {};
+    
     const arrowStyle = {
-        left: arrowX != null ? `${arrowX}px` : '',
-        top: arrowY != null ? `${arrowY}px` : '',
-        [arrowPlacement]: '-5px'
+        left: !!arrowX ? `${arrowX}px` : '',
+        top: !!arrowY ? `${arrowY}px` : '',
+        [arrowPlacement.position!]: '-5px',
+        transform: 'rotate('+ arrowPlacement?.rotate +'deg)'
     };
 
     const onFloatingRefChange = useCallback((node: HTMLElement|null) => {
@@ -82,7 +84,7 @@ export const Popover = (props: PopoverProps) => {
                         top: y ?? 0,
                         left: x ?? 0
                     }}
-                >
+                    >
                     {content}
                     <div className="arrow"
                          ref={arrowRef}

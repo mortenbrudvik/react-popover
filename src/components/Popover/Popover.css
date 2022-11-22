@@ -1,12 +1,11 @@
 .arrow {
     background: white;
-    border-left: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
     height: 8px;
     position: absolute;
-    transform: rotate(45deg);
     width: 8px;
     z-index: 700;
+    border-left: 1px solid lightgrey;
+    border-bottom: 1px solid lightgray;
 }
 
 .floating {
