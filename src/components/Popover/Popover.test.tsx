@@ -1,16 +1,11 @@
 import {Popover, PopoverProps} from "./Popover";
-import {render, screen, waitFor} from "@testing-library/react";
+import {render, screen} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {act} from "react-dom/test-utils";
 
-const defaultProps: PopoverProps = {
-    opened: true,
-    children: null
-};
-
 const TestContainer = (props: Partial<PopoverProps>) =>
     (
-        <Popover>
+        <Popover {...props}>
             <Popover.Target>
                 <button type="button">popover-target</button>
             </Popover.Target>
@@ -25,10 +20,29 @@ describe('Test Popover component', () => {
         render(<TestContainer/>);
         expect(screen.queryAllByText('popover-content')).toHaveLength(0);
 
-        const button = await screen.findByRole('button');
-        await act( async () => {
-            await userEvent.click(button);
-        });
+        await clickButton();
         expect(screen.getByText('popover-content')).toBeInTheDocument();
+
+        await clickButton();
+        expect(screen.queryAllByText('popover-content')).toHaveLength(0);
     });
+    
+    it('external open/close component',async () => {
+        const spy = jest.fn();
+        render(<TestContainer opened={true} onChange={spy}/>);
+
+        await clickButton();
+        expect(spy).toHaveBeenCalledTimes(1);
+
+        await userEvent.click(document.body);
+        expect(spy).toHaveBeenCalledTimes(2);
+        expect(spy).toHaveBeenLastCalledWith(false);
+    })
 })
+
+async function clickButton() {
+    const button = await screen.findByRole('button');
+    await act(async () => {
+        await userEvent.click(button);
+    });
+}
