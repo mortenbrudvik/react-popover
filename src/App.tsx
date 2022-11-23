@@ -1,5 +1,6 @@
 import {Content, Popover, Target } from 'components';
 import React, {useState} from 'react';
+import {Stack} from "./components/Stack";
 
 const questions = ['How you doing?', 'How is the weather today?', 'Where are you from?', 'What do you do?']
 
@@ -13,16 +14,14 @@ const App = () => {
                     <button>Click me!</button>
                 </Target>
                 <Content>
-                    <ul>
-                        <div className="question-heading">Pick a question</div>
-                        {questions.map(question =>
-                            <li key={question}>
-                                <div className="question" onClick={() => setOpen(false)}>
-                                    {question}
-                                </div>
-                            </li>
-                        )}
-                    </ul>
+                    <div className="question-heading">Pick a question</div>
+                    <Stack>
+                    {questions.map(question =>
+                        <div className="question" onClick={() => setOpen(false)}>
+                            {question}
+                        </div>
+                    )}
+                    </Stack>
                 </Content>
 
             </Popover>
