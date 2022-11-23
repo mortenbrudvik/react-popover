@@ -34,6 +34,11 @@ li {
   border-radius: 2px;
 }
 
+.question-list {
+  max-height: 200px;
+}
+
+
 .question:hover {
   background: aliceblue;
   cursor: default;
@@ -44,3 +49,4 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+

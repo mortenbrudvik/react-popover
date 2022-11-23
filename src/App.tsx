@@ -1,6 +1,7 @@
 import {Content, Popover, Target } from 'components';
 import React, {useState} from 'react';
-import {Stack} from "./components/Stack";
+import {Stack} from "./components";
+import {ScrollArea} from "./components";
 
 const questions = ['How you doing?', 'How is the weather today?', 'Where are you from?', 'What do you do?']
 
@@ -15,13 +16,16 @@ const App = () => {
                 </Target>
                 <Content>
                     <div className="question-heading">Pick a question</div>
-                    <Stack>
-                    {questions.map(question =>
-                        <div className="question" onClick={() => setOpen(false)}>
-                            {question}
-                        </div>
-                    )}
-                    </Stack>
+
+                    <ScrollArea className="question-list" >
+                        <Stack>
+                        {questions.map(question =>
+                            <div className="question" onClick={() => setOpen(false)}>
+                                {question}
+                            </div>
+                        )}
+                        </Stack>
+                    </ScrollArea>
                 </Content>
 
             </Popover>
