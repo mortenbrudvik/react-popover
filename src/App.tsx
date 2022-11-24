@@ -1,4 +1,4 @@
-import {Content, Popover, Target } from 'components';
+import {Content, Popover, Target} from 'components';
 import React, {useState} from 'react';
 import {Stack} from "./components";
 import {ScrollArea} from "./components";
@@ -15,17 +15,18 @@ const App = () => {
                     <button>Click me!</button>
                 </Target>
                 <Content>
-                    <div className="question-heading">Pick a question</div>
-
-                    <ScrollArea className="question-list" >
-                        <Stack>
-                        {questions.map(question =>
-                            <div className="question" onClick={() => setOpen(false)}>
-                                {question}
-                            </div>
-                        )}
-                        </Stack>
-                    </ScrollArea>
+                    <div style={{padding: 5}}>
+                        <div className="question-heading">Pick a question</div>
+                        <ScrollArea>
+                            <Stack className="question-list">
+                                {questions.map(question =>
+                                    <div className="question" onClick={() => setOpen(false)}>
+                                        {question}
+                                    </div>
+                                )}
+                            </Stack>
+                        </ScrollArea>
+                    </div>
                 </Content>
 
             </Popover>

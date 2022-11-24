@@ -3,11 +3,13 @@ import './Stack.css';
 
 export type StackProps = {
     children: ReactNode;
+    className?: string;
 };
 
-export const Stack = (props: StackProps) => {
-
+export const Stack = ({children, className = ''}: StackProps) => {
     return (
-        <div className="stack" {...props} style={{alignItems: 'stretch', justifyContent: 'top', gap: '3px'}}/>
+        <div className={"stack " + className} style={{alignItems: 'stretch', justifyContent: 'top', gap: '3px'}}>
+            {children}
+        </div>
     );
 };
